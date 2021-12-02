@@ -55,10 +55,10 @@ public class StudentService {
 
         Map<String, Object> map = new HashMap<>();
 
-        dorm.setLeaderNo(selectByNo(dorm.getLeaderNo()).getName());
+        dorm.setLeader(selectByNo(dorm.getLeader()).getName());
 
         map.put("dormInfo", dorm);
-        map.put("member", students);
+        map.put("tableData", students);
 
         return map;
     }

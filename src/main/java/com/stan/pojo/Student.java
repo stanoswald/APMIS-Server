@@ -1,25 +1,25 @@
 package com.stan.pojo;
 
-public class Student{
-    private String no;
-    private String dormId;
-    private String regDate;
-    private Integer deptNo;
-    private String name;
-    private String tel;
+public class Student {
+    String no;
+    String dormId;
+    String regDate;
+    String dept;
+    String name;
+    String tel;
 
-    public Student(String no, String dormId, String regDate, Integer deptNo) {
+    public Student(String no, String dormId, String regDate, String dept) {
         this.no = no;
         this.dormId = dormId;
         this.regDate = regDate;
-        this.deptNo = deptNo;
+        this.dept = dept;
     }
 
-    public Student(String no, String dormId, String regDate, Integer deptNo, String name, String tel) {
+    public Student(String no, String dormId, String regDate, String dept, String name, String tel) {
         this.no = no;
         this.dormId = dormId;
         this.regDate = regDate;
-        this.deptNo = deptNo;
+        this.dept = dept;
         this.name = name;
         this.tel = tel;
     }
@@ -48,12 +48,12 @@ public class Student{
         this.regDate = regDate;
     }
 
-    public Integer getDeptNo() {
-        return deptNo;
+    public String getDept() {
+        return dept;
     }
 
-    public void setDeptNo(Integer deptNo) {
-        this.deptNo = deptNo;
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 
     public String getName() {
@@ -78,7 +78,7 @@ public class Student{
                 "no='" + no + '\'' +
                 ", dormId='" + dormId + '\'' +
                 ", regDate='" + regDate + '\'' +
-                ", deptNo=" + deptNo +
+                ", dept='" + dept + '\'' +
                 ", name='" + name + '\'' +
                 ", tel='" + tel + '\'' +
                 '}';

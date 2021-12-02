@@ -1,30 +1,42 @@
 package com.stan.pojo;
 
 public class Dorm {
-    private Integer dormId;
-    private String leaderNo;
-    private String tel;
+    Integer id;
+    String apartment;
+    String leader;
+    String tel;
+    String manager;
 
-    public Dorm(Integer dormId, String leaderNo, String tel) {
-        this.dormId = dormId;
-        this.leaderNo = leaderNo;
+    public Dorm(Integer id, String apartment, String leader, String tel, String manager) {
+        this.id = id;
+        this.apartment = apartment;
+        this.leader = leader;
         this.tel = tel;
+        this.manager = manager;
     }
 
-    public Integer getDormId() {
-        return dormId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDormId(Integer dormId) {
-        this.dormId = dormId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getLeaderNo() {
-        return leaderNo;
+    public String getApartment() {
+        return apartment;
     }
 
-    public void setLeaderNo(String leaderNo) {
-        this.leaderNo = leaderNo;
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
     }
 
     public String getTel() {
@@ -35,12 +47,22 @@ public class Dorm {
         this.tel = tel;
     }
 
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
+    }
+
     @Override
     public String toString() {
         return "Dorm{" +
-                "dormId=" + dormId +
-                ", leaderNo=" + leaderNo +
+                "id='" + id + '\'' +
+                ", apartment='" + apartment + '\'' +
+                ", leader='" + leader + '\'' +
                 ", tel='" + tel + '\'' +
+                ", manager='" + manager + '\'' +
                 '}';
     }
 }

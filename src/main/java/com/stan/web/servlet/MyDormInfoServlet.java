@@ -21,7 +21,6 @@ public class MyDormInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("dorm selecting");
         String dormId = request.getParameter("dorm_id");
 
         String jsonStr = JSON.toJSONString(studentService.myDormInfo(dormId));

@@ -3,5 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.stan.mapper.DormMapper">
+    <resultMap id="dormResultMap" type="dorm">
+        <result column="dorm_id" property="id"/>
+        <result column="ap_name" property="apartment"/>
+    </resultMap>
 
+    <select id="selectDormById" resultMap="dormResultMap">
+        SELECT *
+        FROM tbl_dorm
+                 NATURAL JOIN tbl_apartment
+        WHERE dorm_id = #{id};
+    </select>
 </mapper>

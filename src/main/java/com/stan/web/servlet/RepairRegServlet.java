@@ -29,7 +29,6 @@ public class RepairRegServlet extends HttpServlet {
         List<Student> students = studentService.selectByDorm(dorm);
         Map<String, Object> map = new HashMap<>();
 
-        dorm.setLeaderNo(studentService.selectByNo(dorm.getLeaderNo()).getName());
 
         map.put("dormInfo", dorm);
         map.put("member", students);

@@ -3,5 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.stan.mapper.StudentMapper">
+    <resultMap id="studentResultMap" type="student">
+        <result column="stu_no" property="no"/>
+        <result column="dorm_id" property="dormId"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="dept_no" property="dept"/>
+    </resultMap>
+    <select id="selectStudentByNo" resultMap="studentResultMap">
+        select stu_no,dorm_id,reg_date,dept_name,name,tel
+        from tbl_stu s
+            LEFT JOIN tbl_user
+                ON stu_no=username
+            LEFT JOIN tbl_dept d
+                ON s.dept_no=d.dept_no
+        where stu_no=#{no}
+    </select>
+    <select id="selectStudentsByDorm" resultMap="studentResultMap">
+        select stu_no,dorm_id,reg_date,dept_name,name,tel
+        from tbl_stu s
+                 LEFT JOIN tbl_user
+                           ON stu_no=username
+                 LEFT JOIN tbl_dept d
+                           ON s.dept_no=d.dept_no
+        where dorm_id=#{id}
+    </select>
+
 
 </mapper>

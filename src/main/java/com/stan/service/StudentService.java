@@ -46,7 +46,7 @@ public class StudentService {
         return resList;
     }
 
-    public Map<String,Object> myDormInfo(String dormId){
+    public Map<String, Object> myDormInfo(String dormId) {
         SqlSession sqlSession = factory.openSession();
         DormMapper dormMapper = sqlSession.getMapper(DormMapper.class);
 
@@ -60,6 +60,18 @@ public class StudentService {
         map.put("dormInfo", dorm);
         map.put("tableData", students);
 
+        sqlSession.close();
         return map;
+    }
+
+    public Dorm nearByDormInfo(String myDormId, String dormId) {
+        SqlSession sqlSession = factory.openSession();
+        DormMapper mapper = sqlSession.getMapper(DormMapper.class);
+
+        if (myDormId.substring(0, 2).equals(dormId.substring(0, 2)))
+            return mapper.selectDormById(dormId);
+
+        sqlSession.close();
+        return null;
     }
 }

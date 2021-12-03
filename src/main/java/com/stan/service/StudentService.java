@@ -17,20 +17,6 @@ import java.util.Map;
 public class StudentService {
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
 
-    public Student selectByNo(String no) {
-        SqlSession sqlSession = factory.openSession();
-        StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-
-        Student stu = stuMapper.selectStudentByNo(no);
-
-        stu.setTel(userMapper.selectTelByUsername(no));
-        stu.setName(userMapper.selectNameByUsername(no));
-
-        sqlSession.close();
-        return stu;
-    }
-
     public List<Student> selectByDorm(Dorm dorm) {
         SqlSession sqlSession = factory.openSession();
         StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
@@ -39,7 +25,7 @@ public class StudentService {
         List<Student> resList = new ArrayList<Student>();
 
         for (Student stu : stuList) {
-            resList.add(selectByNo(stu.getNo()));
+            resList.add(stuMapper.selectStudentByNo(stu.getNo()));
         }
 
         sqlSession.close();
@@ -49,13 +35,14 @@ public class StudentService {
     public Map<String, Object> myDormInfo(String dormId) {
         SqlSession sqlSession = factory.openSession();
         DormMapper dormMapper = sqlSession.getMapper(DormMapper.class);
+        StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
 
         Dorm dorm = dormMapper.selectDormById(dormId);
         List<Student> students = selectByDorm(dorm);
 
         Map<String, Object> map = new HashMap<>();
 
-        dorm.setLeader(selectByNo(dorm.getLeader()).getName());
+        dorm.setLeader((stuMapper.selectStudentByNo(dorm.getLeader()).getName()));
 
         map.put("dormInfo", dorm);
         map.put("tableData", students);

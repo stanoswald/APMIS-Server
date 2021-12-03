@@ -1,6 +1,7 @@
 package com.stan.mapper;
 
 import com.stan.pojo.User;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -19,19 +20,7 @@ public interface UserMapper {
     @Select("select * from tbl_user")
     List<User> selectAll();
 
-    @Select("select * from tbl_user where username=#{username}")
     User selectByUsername(String username);
 
-    @Select("select role_name from tbl_role where role_id=" +
-            "(select role_id from tbl_user where username=#{username})")
-    role selectUserRole(String username);
-
-    @Update("update tbl_user set tel=#{tel}")
-    void updateUser(User user);
-
-    @Select("select name from tbl_user where username = #{username}")
-    String selectNameByUsername(String username);
-
-    @Select("select tel from tbl_user where username = #{username}")
-    String selectTelByUsername(String username);
+    User selectByUsernameAndPassword(@Param("usr") String username, @Param("pwd") String password);
 }

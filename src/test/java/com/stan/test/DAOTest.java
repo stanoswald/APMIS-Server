@@ -28,21 +28,15 @@ public class DAOTest {
     }
 
     @Test
-    public void testSelectByUsername() {
+    public void testUserSelect() {
         SqlSession sqlSession = factory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        User user = mapper.selectByUsername("211906426");
-        System.out.println(user);
-    }
+        User u1 = mapper.selectByUsername("211906426");
+        System.out.println(u1);
 
-    @Test
-    public void testSelectUserRole() {
-        SqlSession sqlSession = factory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-
-        UserMapper.role role = mapper.selectUserRole("211906351");
-        System.out.println(role);
+        User u2 = mapper.selectByUsernameAndPassword("211906351", "abcyjw");
+        System.out.println(u2);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.stan.web.servlet;
+package com.stan.web.servlet.student;
 
 import com.alibaba.fastjson.JSON;
 import com.stan.pojo.Dorm;
@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/nearByDormInfoServlet")
-public class NearByDormInfoServlet extends HttpServlet {
+@WebServlet("/repairRegServlet")
+public class RepairRegServlet extends HttpServlet {
     private final StudentService studentService = new StudentService();
     private final DormService dormService = new DormService();
 

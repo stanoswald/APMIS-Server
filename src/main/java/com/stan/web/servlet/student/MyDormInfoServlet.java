@@ -20,7 +20,6 @@ public class MyDormInfoServlet extends HttpServlet {
 
         String jsonStr = JSON.toJSONString(studentService.myDormInfo(dormId));
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(jsonStr);
     }

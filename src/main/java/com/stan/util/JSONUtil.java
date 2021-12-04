@@ -19,9 +19,7 @@ public class JSONUtil {
 
         JSONObject.parseObject(jsonStr);
 
-        Map<String, String> map = JSON.parseObject(jsonStr, new TypeReference<Map<String, String>>() {
+        return JSON.parseObject(jsonStr, new TypeReference<Map<String, String>>() {
         });
-
-        return map;
     }
 }

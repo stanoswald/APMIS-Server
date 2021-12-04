@@ -1,21 +1,35 @@
 package com.stan.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.stan.mapper.DormMapper;
 import com.stan.mapper.StudentMapper;
 import com.stan.mapper.UserMapper;
 import com.stan.pojo.Dorm;
 import com.stan.pojo.Student;
+import com.stan.pojo.User;
 import com.stan.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StudentService {
     SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
+
+    public Student getStudentInfo(String username) {
+        SqlSession sqlSession = factory.openSession();
+        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = userMapper.selectByUsername(username);
+
+        if (!"STUDENT".equals(user.getRole()))
+            return null;
+
+        return studentMapper.selectStudentByNo(user.getUsername());
+
+    }
 
     public List<Student> selectByDorm(Dorm dorm) {
         SqlSession sqlSession = factory.openSession();
@@ -51,14 +65,14 @@ public class StudentService {
         return map;
     }
 
-    public Dorm nearByDormInfo(String myDormId, String dormId) {
+    public Dorm nearByDorm(String dorm_id,String dstId){
         SqlSession sqlSession = factory.openSession();
-        DormMapper mapper = sqlSession.getMapper(DormMapper.class);
+        DormMapper dormMapper = sqlSession.getMapper(DormMapper.class);
+        StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
 
-        if (myDormId.substring(0, 2).equals(dormId.substring(0, 2)))
-            return mapper.selectDormById(dormId);
+        Dorm dorm = dormMapper.selectDormById(dorm_id.substring(0, 2) + dstId);
+        dorm.setLeader((stuMapper.selectStudentByNo(dorm.getLeader()).getName()));
 
-        sqlSession.close();
-        return null;
+        return dorm;
     }
 }

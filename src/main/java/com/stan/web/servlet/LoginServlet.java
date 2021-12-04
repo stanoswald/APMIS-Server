@@ -1,12 +1,19 @@
 package com.stan.web.servlet;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.stan.pojo.User;
 import com.stan.service.UserService;
+import com.stan.util.JSONUtil;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "LoginServlet", value = "/loginServlet")
 public class LoginServlet extends HttpServlet {
@@ -15,19 +22,23 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String remember = request.getParameter("remember");
+
+        Map<String, String> map = JSONUtil.paramsToMap(request);
+
+        String username = map.get("username");
+        String password = map.get("password");
+        String remember = map.get("remember");
+
+        response.setContentType("application/json;charset=utf-8");
 
         User user = userService.login(username, password);
 
         if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            System.out.println(user);
 
             if ("remember".equals(remember)) {
                 Cookie c_usr = new Cookie("username", username);
-                Cookie c_pwd = new Cookie("username", password);
+                Cookie c_pwd = new Cookie("password", password);
 
                 c_usr.setMaxAge(60 * 60 * 24 * 3);
                 c_pwd.setMaxAge(60 * 60 * 24 * 3);
@@ -36,8 +47,9 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(c_pwd);
             }
 
-            String contextPath = request.getContextPath();
-        }
+            response.getWriter().write(JSON.toJSONString(user));
+        } else
+            response.getWriter().write("fail");
     }
 
     @Override

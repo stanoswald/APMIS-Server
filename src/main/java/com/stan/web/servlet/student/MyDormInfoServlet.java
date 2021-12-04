@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet("/myDormInfoServlet")
+@WebServlet(name = "MyDormInfoServlet", value = "/my_dorm")
 public class MyDormInfoServlet extends HttpServlet {
     private final StudentService studentService = new StudentService();
     private final DormService dormService = new DormService();

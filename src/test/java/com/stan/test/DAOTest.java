@@ -1,11 +1,7 @@
 package com.stan.test;
 
-import com.stan.mapper.DormMapper;
-import com.stan.mapper.StudentMapper;
-import com.stan.mapper.UserMapper;
-import com.stan.pojo.Dorm;
-import com.stan.pojo.Student;
-import com.stan.pojo.User;
+import com.stan.mapper.*;
+import com.stan.pojo.*;
 import com.stan.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -40,7 +36,7 @@ public class DAOTest {
     }
 
     @Test
-    public void testSelectStudentByNo(){
+    public void testSelectStudentByNo() {
         SqlSession sqlSession = factory.openSession();
         StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
 
@@ -49,7 +45,7 @@ public class DAOTest {
     }
 
     @Test
-    public void testSelectDormById(){
+    public void testSelectDormById() {
         SqlSession sqlSession = factory.openSession();
         DormMapper dormMapper = sqlSession.getMapper(DormMapper.class);
 
@@ -70,5 +66,22 @@ public class DAOTest {
         for (Student stu : stuList) {
             System.out.println(stu);
         }
+    }
+
+    @Test
+    public void testRepair() {
+        SqlSession sqlSession = factory.openSession();
+        PropMapper mapper = sqlSession.getMapper(PropMapper.class);
+
+        for (Property property : mapper.selectAllProperty()) {
+            System.out.println(property);
+        }
+
+        RepairMapper repairMapper = sqlSession.getMapper(RepairMapper.class);
+        for (Repair r : repairMapper.selectAll("211906426")) {
+            System.out.println(r);
+        }
+
+        System.out.println(mapper.selectById("1"));
     }
 }

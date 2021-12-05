@@ -2,10 +2,9 @@ package com.stan.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.stan.mapper.DormMapper;
-import com.stan.mapper.StudentMapper;
-import com.stan.mapper.UserMapper;
+import com.stan.mapper.*;
 import com.stan.pojo.Dorm;
+import com.stan.pojo.Repair;
 import com.stan.pojo.Student;
 import com.stan.pojo.User;
 import com.stan.util.SqlSessionFactoryUtils;
@@ -65,7 +64,7 @@ public class StudentService {
         return map;
     }
 
-    public Dorm nearByDorm(String dorm_id,String dstId){
+    public Dorm nearByDorm(String dorm_id, String dstId) {
         SqlSession sqlSession = factory.openSession();
         DormMapper dormMapper = sqlSession.getMapper(DormMapper.class);
         StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
@@ -73,6 +72,45 @@ public class StudentService {
         Dorm dorm = dormMapper.selectDormById(dorm_id.substring(0, 2) + dstId);
         dorm.setLeader((stuMapper.selectStudentByNo(dorm.getLeader()).getName()));
 
+        sqlSession.close();
         return dorm;
     }
+
+    public boolean repairReg(Repair repair) {
+        SqlSession sqlSession = factory.openSession();
+        RepairMapper mapper = sqlSession.getMapper(RepairMapper.class);
+
+        int i = mapper.insertRepair(repair);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
+
+    public boolean delReg(String id) {
+        SqlSession sqlSession = factory.openSession();
+        RepairMapper mapper = sqlSession.getMapper(RepairMapper.class);
+
+        int i = mapper.deleteById(id);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
+
+    public List<Repair> repairInfo(String no) {
+        SqlSession sqlSession = factory.openSession();
+        RepairMapper mapper = sqlSession.getMapper(RepairMapper.class);
+        PropMapper propMapper = sqlSession.getMapper(PropMapper.class);
+
+        List<Repair> repairList = mapper.selectAll(no);
+        for (Repair r : repairList) {
+            r.setPropId(propMapper.selectById(r.getPropId()));
+        }
+
+        sqlSession.close();
+        return repairList;
+    }
+
+
 }

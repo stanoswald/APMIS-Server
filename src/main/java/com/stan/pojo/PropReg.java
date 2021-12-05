@@ -6,6 +6,7 @@ public class PropReg {
     String propId;
     String registrant;
     String stat;
+    String propName;
 
     public PropReg(String id, String dormId, String propId, String registrant, String stat) {
         this.id = id;

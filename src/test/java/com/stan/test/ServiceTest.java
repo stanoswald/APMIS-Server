@@ -3,6 +3,7 @@ package com.stan.test;
 import com.stan.pojo.Dorm;
 import com.stan.pojo.Repair;
 import com.stan.pojo.Student;
+import com.stan.pojo.Visitor;
 import com.stan.service.DormService;
 import com.stan.service.PropService;
 import com.stan.service.StudentService;
@@ -32,6 +33,10 @@ public class ServiceTest {
 
         Map<String, ArrayList<Map<String, String>>> propList = propService.getPropList();
         System.out.println(propList);
+
+        for (Visitor v : studentService.visitorInfo("211906426")) {
+            System.out.println(v);
+        }
 
     }
 

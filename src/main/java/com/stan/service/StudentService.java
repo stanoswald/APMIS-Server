@@ -115,4 +115,43 @@ public class StudentService {
 
         return mapper.selectByDormAndDate(dormId, month);
     }
+
+    public boolean visitorReg(Visitor vis) {
+        SqlSession sqlSession = factory.openSession();
+        VisitorMapper mapper = sqlSession.getMapper(VisitorMapper.class);
+
+        int i = mapper.insertVisitor(vis);
+
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
+
+    public List<Visitor> visitorInfo(String reg) {
+        SqlSession sqlSession = factory.openSession();
+        VisitorMapper mapper = sqlSession.getMapper(VisitorMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        User u = userMapper.selectByUsername(reg);
+
+        List<Visitor> visitorList = mapper.selectAllByReg(reg);
+        for (Visitor v : visitorList) {
+            v.setRegistrant(u.getName());
+        }
+
+        sqlSession.close();
+        return visitorList;
+    }
+
+    public boolean delVis(String id) {
+        SqlSession sqlSession = factory.openSession();
+        VisitorMapper mapper = sqlSession.getMapper(VisitorMapper.class);
+
+        int i = mapper.deleteById(id);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
 }

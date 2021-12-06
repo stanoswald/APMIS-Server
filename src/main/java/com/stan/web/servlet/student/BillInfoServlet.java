@@ -16,26 +16,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/billInfoServlet")
+@WebServlet(name = "BillInfoServlet", value = "/bill_info")
 public class BillInfoServlet extends HttpServlet {
     private final StudentService studentService = new StudentService();
-    private final DormService dormService = new DormService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("dorm selecting");
-        String dormId = request.getParameter("dorm_id");
-        Dorm dorm = dormService.selectById(dormId);
-        List<Student> students = studentService.selectByDorm(dorm);
-        Map<String, Object> map = new HashMap<>();
+        String id = request.getParameter("dorm_id");
+        String month = request.getParameter("month");
 
+        String jsonStr = JSON.toJSONString(studentService.billInfo(id, month));
 
-        map.put("dormInfo", dorm);
-        map.put("member", students);
-
-        String jsonStr = JSON.toJSONString(map);
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(jsonStr);
     }

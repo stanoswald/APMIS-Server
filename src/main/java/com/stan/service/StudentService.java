@@ -3,10 +3,7 @@ package com.stan.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.stan.mapper.*;
-import com.stan.pojo.Dorm;
-import com.stan.pojo.Repair;
-import com.stan.pojo.Student;
-import com.stan.pojo.User;
+import com.stan.pojo.*;
 import com.stan.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -112,5 +109,10 @@ public class StudentService {
         return repairList;
     }
 
+    public List<Bill> billInfo(String dormId, String month) {
+        SqlSession sqlSession = factory.openSession();
+        BillMapper mapper = sqlSession.getMapper(BillMapper.class);
 
+        return mapper.selectByDormAndDate(dormId, month);
+    }
 }

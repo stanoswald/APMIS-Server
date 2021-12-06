@@ -84,4 +84,15 @@ public class DAOTest {
 
         System.out.println(mapper.selectById("1"));
     }
+
+    @Test
+    public void testBill(){
+        SqlSession sqlSession = factory.openSession();
+        BillMapper mapper = sqlSession.getMapper(BillMapper.class);
+
+        for (Bill bill : mapper.selectByDormAndDate("18615", "2021-11")) {
+            System.out.println(bill);
+        }
+
+    }
 }

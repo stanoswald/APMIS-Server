@@ -86,7 +86,7 @@ public class DAOTest {
     }
 
     @Test
-    public void testBill(){
+    public void testBill() {
         SqlSession sqlSession = factory.openSession();
         BillMapper mapper = sqlSession.getMapper(BillMapper.class);
 
@@ -94,5 +94,23 @@ public class DAOTest {
             System.out.println(bill);
         }
 
+    }
+
+    @Test
+    public void testPropReg() {
+        SqlSession sqlSession = factory.openSession();
+        PropMapper mapper = sqlSession.getMapper(PropMapper.class);
+
+        int i = mapper.insertPropReg(
+                new PropReg(null,
+                        "18615",
+                        "4",
+                        "211906426",
+                        "移入",
+                        "待审核"));
+
+        sqlSession.commit();
+        sqlSession.close();
+        System.out.println(i);
     }
 }

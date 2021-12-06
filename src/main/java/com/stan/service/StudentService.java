@@ -154,4 +154,44 @@ public class StudentService {
         sqlSession.close();
         return i == 1;
     }
+
+    public boolean propReg(PropReg reg) {
+        SqlSession sqlSession = factory.openSession();
+        PropMapper mapper = sqlSession.getMapper(PropMapper.class);
+
+        int i = mapper.insertPropReg(reg);
+
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
+
+    public List<PropReg> propRegInfo(String no) {
+        SqlSession sqlSession = factory.openSession();
+        PropMapper mapper = sqlSession.getMapper(PropMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        User u = userMapper.selectByUsername(no);
+
+        List<PropReg> propRegList = mapper.selectAllPropRegByNo(no);
+        for (PropReg pR : propRegList) {
+            pR.setPropId(mapper.selectById(pR.getPropId()));
+            pR.setRegistrant(u.getName());
+        }
+
+        sqlSession.close();
+        return propRegList;
+    }
+
+    public boolean delPropReg(String id) {
+        SqlSession sqlSession = factory.openSession();
+        PropMapper mapper = sqlSession.getMapper(PropMapper.class);
+
+        int i = mapper.deleteRegById(id);
+        sqlSession.commit();
+
+        sqlSession.close();
+        return i == 1;
+    }
 }

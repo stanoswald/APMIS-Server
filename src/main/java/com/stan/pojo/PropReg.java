@@ -5,14 +5,15 @@ public class PropReg {
     String dormId;
     String propId;
     String registrant;
+    String regType;
     String stat;
-    String propName;
 
-    public PropReg(String id, String dormId, String propId, String registrant, String stat) {
+    public PropReg(String id, String dormId, String propId, String registrant, String regType, String stat) {
         this.id = id;
         this.dormId = dormId;
         this.propId = propId;
         this.registrant = registrant;
+        this.regType = regType;
         this.stat = stat;
     }
 
@@ -48,6 +49,14 @@ public class PropReg {
         this.registrant = registrant;
     }
 
+    public String getRegType() {
+        return regType;
+    }
+
+    public void setRegType(String regType) {
+        this.regType = regType;
+    }
+
     public String getStat() {
         return stat;
     }
@@ -63,6 +72,7 @@ public class PropReg {
                 ", dormId='" + dormId + '\'' +
                 ", propId='" + propId + '\'' +
                 ", registrant='" + registrant + '\'' +
+                ", regType='" + regType + '\'' +
                 ", stat='" + stat + '\'' +
                 '}';
     }

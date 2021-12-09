@@ -34,7 +34,6 @@ public class LoginServlet extends HttpServlet {
         User user = userService.login(username, password);
 
         if (user != null) {
-            System.out.println(user);
 
             if ("remember".equals(remember)) {
                 Cookie c_usr = new Cookie("username", username);

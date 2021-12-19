@@ -113,4 +113,22 @@ public class DAOTest {
         sqlSession.close();
         System.out.println(i);
     }
+
+    @Test
+    public void updateUsr() {
+        SqlSession sqlSession = factory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        int i = mapper.updateUser(new User(
+                "test",
+                null,
+                null,
+                null,
+                null,
+                "test@gmail.com"));
+
+        System.out.println(i);
+        sqlSession.commit();
+        sqlSession.close();
+    }
 }

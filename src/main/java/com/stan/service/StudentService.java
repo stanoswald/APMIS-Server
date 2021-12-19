@@ -1,7 +1,5 @@
 package com.stan.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.stan.mapper.*;
 import com.stan.pojo.*;
 import com.stan.util.SqlSessionFactoryUtils;
@@ -23,11 +21,13 @@ public class StudentService {
         if (!"STUDENT".equals(user.getRole()))
             return null;
 
-        return studentMapper.selectStudentByNo(user.getUsername());
+        Student res = studentMapper.selectStudentByNo(user.getUsername());
+        sqlSession.close();
+        return res;
 
     }
 
-    public List<Student> selectByDorm(Dorm dorm) {
+    public List<Student> selectStudentByDorm(Dorm dorm) {
         SqlSession sqlSession = factory.openSession();
         StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
 
@@ -48,7 +48,7 @@ public class StudentService {
         StudentMapper stuMapper = sqlSession.getMapper(StudentMapper.class);
 
         Dorm dorm = dormMapper.selectDormById(dormId);
-        List<Student> students = selectByDorm(dorm);
+        List<Student> students = selectStudentByDorm(dorm);
 
         Map<String, Object> map = new HashMap<>();
 
@@ -194,4 +194,5 @@ public class StudentService {
         sqlSession.close();
         return i == 1;
     }
+
 }

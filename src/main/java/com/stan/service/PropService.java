@@ -31,6 +31,7 @@ public class PropService {
             }
             res.get(p.getName()).add(m);
         }
+        sqlSession.close();
         return res;
     }
 
@@ -45,6 +46,8 @@ public class PropService {
         SqlSession sqlSession = factory.openSession();
         PropMapper mapper = sqlSession.getMapper(PropMapper.class);
 
-        return mapper.selectAllType();
+        List<String> res = mapper.selectAllType();
+        sqlSession.close();
+        return res;
     }
 }

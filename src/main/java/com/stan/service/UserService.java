@@ -18,4 +18,28 @@ public class UserService {
         sqlSession.close();
         return user;
     }
+
+    public boolean updateUsr(String username, String tel, String email) {
+        User user = new User(username, null, null, null, tel, email);
+        SqlSession sqlSession = factory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        int i = mapper.updateUser(user);
+
+        sqlSession.commit();
+        sqlSession.close();
+        return i == 1;
+    }
+
+    public boolean updateUsr(String username, String pwd) {
+        User user = new User(username, pwd);
+        SqlSession sqlSession = factory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        int i = mapper.updateUser(user);
+
+        sqlSession.commit();
+        sqlSession.close();
+        return i == 1;
+    }
 }

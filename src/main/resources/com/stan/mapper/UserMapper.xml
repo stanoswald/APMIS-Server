@@ -8,18 +8,32 @@
     </resultMap>
 
     <select id="selectByUsername" resultMap="userResultMap">
-        SELECT username, `password`, `name`, tel, role_name
+        SELECT username, `password`, `name`, tel, role_name, email
         from tbl_user
                  NATURAL JOIN tbl_role
         where username = #{username}
     </select>
     <select id="selectByUsernameAndPassword" resultMap="userResultMap">
-        SELECT username, `password`, `name`, tel, role_name
+        SELECT username, `password`, `name`, tel, role_name, email
         from tbl_user
                  NATURAL JOIN tbl_role
         where username = #{usr}
           and `password` = #{pwd}
     </select>
 
-
+    <update id="updateUser">
+        update tbl_user
+        <set>
+            <if test="password!=null">
+                password=#{password}
+            </if>
+            <if test="email!=null">
+                email=#{email}
+            </if>
+            <if test="tel!=null">
+                tel=#{tel}
+            </if>
+        </set>
+        where username=#{username}
+    </update>
 </mapper>

@@ -23,4 +23,6 @@ public interface UserMapper {
     User selectByUsername(String username);
 
     User selectByUsernameAndPassword(@Param("usr") String username, @Param("pwd") String password);
+
+    int updateUser(User user);
 }

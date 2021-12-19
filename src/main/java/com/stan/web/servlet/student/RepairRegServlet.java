@@ -40,7 +40,6 @@ public class RepairRegServlet extends HttpServlet {
 
         String res = studentService.repairReg(repair) ? "success" : "fail";
 
-        response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(res);
     }
 
